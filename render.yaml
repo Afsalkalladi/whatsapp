@@ -5,7 +5,7 @@ services:
     plan: free
     branch: main
     pythonVersion: "3.11.10"
-    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
+    buildCommand: pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput && python manage.py create_superuser
     startCommand: gunicorn cv_manager.wsgi --bind 0.0.0.0:$PORT --log-file -
     envVars:
       - key: DJANGO_SECRET_KEY
@@ -32,4 +32,12 @@ services:
         sync: false
       - key: CSRF_TRUSTED_ORIGINS
         sync: false
+      - key: GOOGLE_CREDENTIALS_JSON
+        sync: false
+      - key: DJANGO_SUPERUSER_USERNAME
+        value: admin
+      - key: DJANGO_SUPERUSER_EMAIL
+        value: admin@whatsapp-cv.com
+      - key: DJANGO_SUPERUSER_PASSWORD
+        generateValue: true
     healthCheckPath: /webhook/health/
