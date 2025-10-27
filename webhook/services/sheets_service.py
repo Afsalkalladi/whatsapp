@@ -2,7 +2,9 @@
 Google Sheets Service
 Handles data storage in Google Sheets
 """
+import json
 import logging
+import os
 from datetime import datetime
 from django.conf import settings
 
@@ -30,10 +32,22 @@ class SheetsService:
                 'https://www.googleapis.com/auth/drive'
             ]
             
-            # Add credentials
-            credentials = ServiceAccountCredentials.from_json_keyfile_name(
-                self.credentials_path, scope
-            )
+            # Check if credentials are in environment variable (for Render)
+            google_creds_json = os.getenv('GOOGLE_CREDENTIALS_JSON')
+            
+            if google_creds_json:
+                # Load credentials from environment variable
+                credentials_dict = json.loads(google_creds_json)
+                credentials = ServiceAccountCredentials.from_json_keyfile_dict(
+                    credentials_dict, scope
+                )
+                logger.info('Google Sheets credentials loaded from environment variable')
+            else:
+                # Load credentials from file (local development)
+                credentials = ServiceAccountCredentials.from_json_keyfile_name(
+                    self.credentials_path, scope
+                )
+                logger.info(f'Google Sheets credentials loaded from {self.credentials_path}')
             
             # Authorize and open the sheet
             client = gspread.authorize(credentials)
@@ -49,6 +63,7 @@ class SheetsService:
         except FileNotFoundError:
             logger.error(f'Credentials file not found: {self.credentials_path}')
         except Exception as e:
+            logger.error(f'Error initializing Google Sheets: {str(e)}', exc_info=True)
             logger.error(f'Error initializing Google Sheets: {str(e)}', exc_info=True)
     
     def _ensure_headers(self):
