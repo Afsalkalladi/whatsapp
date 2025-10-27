@@ -6,11 +6,7 @@ services:
     branch: main
     pythonVersion: "3.11.10"
     buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
-    startCommand: python manage.py migrate && python manage.py create_superuser; gunicorn cv_manager.wsgi --bind 0.0.0.0:$PORT --log-file -
-    disk:
-      name: whatsapp-cv-data
-      mountPath: /opt/render/project/src/data
-      sizeGB: 1
+    startCommand: gunicorn cv_manager.wsgi --bind 0.0.0.0:$PORT --log-file -
     envVars:
       - key: DJANGO_SECRET_KEY
         generateValue: true
@@ -38,12 +34,4 @@ services:
         sync: false
       - key: GOOGLE_CREDENTIALS_JSON
         sync: false
-      - key: DJANGO_SUPERUSER_USERNAME
-        value: admin
-      - key: DJANGO_SUPERUSER_EMAIL
-        value: admin@whatsapp-cv.com
-      - key: DJANGO_SUPERUSER_PASSWORD
-        generateValue: true
-      - key: DB_PATH
-        value: /opt/render/project/src/data/db.sqlite3
     healthCheckPath: /webhook/health/

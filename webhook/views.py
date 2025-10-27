@@ -20,6 +20,11 @@ gemini_service = GeminiService()
 sheets_service = SheetsService()
 
 
+def health_check(request):
+    """Simple health check endpoint for Render"""
+    return JsonResponse({'status': 'ok'})
+
+
 @csrf_exempt
 def whatsapp_webhook(request):
     """
