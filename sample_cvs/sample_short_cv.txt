@@ -1,0 +1,27 @@
+Sarah Johnson
+sarah.johnson@email.com | +1-555-9876 | linkedin.com/in/sarahjohnson
+
+DATA SCIENTIST
+
+SKILLS
+• Python, R, SQL
+• Machine Learning: scikit-learn, TensorFlow, PyTorch
+• Data Analysis: Pandas, NumPy, Matplotlib
+• Big Data: Spark, Hadoop
+• Cloud: AWS, Azure
+• Tools: Jupyter, Git, Docker
+
+EXPERIENCE
+
+Lead Data Scientist | DataCo Inc | 2020 - Present
+- Developed predictive models with 95% accuracy
+- Led team of 4 data scientists
+- Reduced processing time by 60% using Spark
+
+Data Analyst | Analytics Firm | 2018 - 2020
+- Created dashboards using Tableau and Power BI
+- Performed statistical analysis for Fortune 500 clients
+
+EDUCATION
+MS in Data Science | MIT | 2018
+BS in Mathematics | Stanford | 2016
