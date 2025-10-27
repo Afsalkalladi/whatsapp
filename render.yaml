@@ -1,10 +1,10 @@
 services:
   - type: web
     name: whatsapp-cv-manager
-    runtime: python
+    env: python
     plan: free
     branch: main
-    runtimeVersion: "3.11.10"
+    pythonVersion: "3.11.10"
     buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
     startCommand: gunicorn cv_manager.wsgi --bind 0.0.0.0:$PORT --log-file -
     envVars:
