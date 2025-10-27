@@ -30,7 +30,23 @@ class GeminiService:
             
             # Configure Gemini
             genai.configure(api_key=self.api_key)
-            model = genai.GenerativeModel('gemini-pro')
+            
+            # List available models for debugging
+            try:
+                available_models = [m.name for m in genai.list_models() if 'generateContent' in m.supported_generation_methods]
+                logger.info(f'Available Gemini models: {available_models}')
+                # Use the first available model that supports content generation
+                if available_models:
+                    model_name = available_models[0].replace('models/', '')
+                    logger.info(f'Using model: {model_name}')
+                    model = genai.GenerativeModel(model_name)
+                else:
+                    logger.error('No suitable Gemini models available')
+                    return None
+            except Exception as list_error:
+                logger.error(f'Error listing models: {list_error}')
+                # Fallback to trying gemini-pro directly
+                model = genai.GenerativeModel('gemini-pro')
             
             # Create prompt for structured extraction
             prompt = f"""
