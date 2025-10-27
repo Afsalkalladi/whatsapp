@@ -30,7 +30,7 @@ class GeminiService:
             
             # Configure Gemini
             genai.configure(api_key=self.api_key)
-            model = genai.GenerativeModel('gemini-1.5-flash')
+            model = genai.GenerativeModel('gemini-pro')
             
             # Create prompt for structured extraction
             prompt = f"""
